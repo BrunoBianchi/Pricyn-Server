@@ -14,15 +14,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const typeorm_1 = require("typeorm");
-const bcrypt_1 = __importDefault(require("bcrypt"));
+const bcrypt_module_1 = __importDefault(require("../../controller/services/bcrypt-module"));
 let User = class User {
     constructor() {
         this.createdAt = new Date();
     }
     async hashPassword() {
-        const salt = await bcrypt_1.default.genSalt(10);
-        const hash = await bcrypt_1.default.hash(this.password, salt);
-        this.password = hash;
+        this.password = await bcrypt_module_1.default.hash(this.password);
     }
 };
 __decorate([

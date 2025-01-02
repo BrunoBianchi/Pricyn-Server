@@ -9,6 +9,12 @@ exports.route = express_1.default.Router();
 const crude_module_1 = __importDefault(require("../../../services/crude-module"));
 const jwt_module_1 = __importDefault(require("../../../services/jwt-module"));
 const zod_1 = require("zod");
+const cors_1 = __importDefault(require("cors"));
+const email_module_1 = __importDefault(require("../../../services/email-module"));
+exports.route.use((0, cors_1.default)({
+    origin: ['https://dash.pricyn.com', 'http://localhost:3000'],
+    optionsSuccessStatus: 200
+}));
 exports.route.post('/sign-up', async (req, res) => {
     try {
         const user = zod_1.z.object({
@@ -23,6 +29,7 @@ exports.route.post('/sign-up', async (req, res) => {
         });
         const token = await jwt_module_1.default.signIn(data.data);
         res.status(data.status).json({ message: data.message, data: token });
+        email_module_1.default.sendVerificationEmail(user.email, 'Verify your email for Pricyn');
     }
     catch (err) {
         res.status(400).json({ message: err.message });
@@ -38,7 +45,7 @@ exports.route.post('/login', async (req, res) => {
         if (!user)
             throw new Error('Email Or Password is incorrect');
         const token = await jwt_module_1.default.signIn(user);
-        res.status(200).json({ message: 'Logged  in ', data: token });
+        res.status(200).json({ message: 'Logged in ', data: token });
     }
     catch (err) {
         res.status(400).json({ message: 'Email Or Password is incorrect' });
