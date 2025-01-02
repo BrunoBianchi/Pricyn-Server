@@ -8,7 +8,7 @@ const routes_routing_module_1 = __importDefault(require("./controller/routes/rou
 const data_source_1 = require("./database/data-source");
 const app = (0, express_1.default)();
 app.get('/', (req, res) => {
-    res.send('Hello World z1');
+    res.send('Hello World z1 2');
 });
 // Initialize database first
 data_source_1.AppDataSource.initialize()
