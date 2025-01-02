@@ -7,6 +7,9 @@ const express_1 = __importDefault(require("express"));
 const routes_routing_module_1 = __importDefault(require("./controller/routes/routes-routing-module"));
 const data_source_1 = require("./database/data-source");
 const app = (0, express_1.default)();
+app.get('/', (req, res) => {
+    res.send('Hello World z1');
+});
 // Initialize database first
 data_source_1.AppDataSource.initialize()
     .then(() => {
