@@ -23,6 +23,7 @@ let User = class User {
         this.password = await bcrypt_module_1.default.hash(this.password);
     }
 };
+exports.User = User;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)({
         name: 'id',
@@ -91,11 +92,10 @@ __decorate([
     }),
     __metadata("design:type", Boolean)
 ], User.prototype, "newsletter", void 0);
-User = __decorate([
+exports.User = User = __decorate([
     (0, typeorm_1.Entity)({
         name: 'users',
         schema: 'public'
     })
 ], User);
-exports.User = User;
 //# sourceMappingURL=User.js.map
