@@ -12,7 +12,7 @@ const zod_1 = require("zod");
 const cors_1 = __importDefault(require("cors"));
 const email_module_1 = __importDefault(require("../../../services/email-module"));
 exports.route.use((0, cors_1.default)({
-    origin: ['https://dash.pricyn.com', 'http://localhost:3000'],
+    origin: ['https://dash.pricyn.com', 'http://localhost:3000', 'http://localhost:4200'],
     optionsSuccessStatus: 200
 }));
 exports.route.post('/sign-up', async (req, res) => {
@@ -21,11 +21,13 @@ exports.route.post('/sign-up', async (req, res) => {
             name: zod_1.z.string(),
             email: zod_1.z.string(),
             password: zod_1.z.string(),
+            newsletter: zod_1.z.boolean()
         }).parse(req.body);
         const data = await crude_module_1.default.createNewUser({
             name: user.name,
             email: user.email,
             password: user.password,
+            newsletter: user.newsletter
         });
         const token = await jwt_module_1.default.signIn(data.data);
         res.status(data.status).json({ message: data.message, data: token });
