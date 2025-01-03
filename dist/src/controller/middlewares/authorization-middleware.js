@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authorizationMiddleware = void 0;
 const jwt_module_1 = __importDefault(require("../services/jwt-module"));
+const crude_module_1 = __importDefault(require("../services/crude-module"));
 // Middleware de autorização
 const authorizationMiddleware = async (req, res, next) => {
     try {
@@ -20,7 +21,11 @@ const authorizationMiddleware = async (req, res, next) => {
         if (!payload) {
             return res.status(401).json({ message: "Unauthorized" });
         }
-        req.user = payload; // Adiciona o usuário à requisição
+        const user = await crude_module_1.default.findByEmail(payload.email);
+        if (!user) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+        req.user = user; // Adiciona o usuário à requisição
         next(); // Passa para o próximo middleware
     }
     catch (err) {

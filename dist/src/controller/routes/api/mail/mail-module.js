@@ -22,6 +22,7 @@ exports.route.get('/verify-email', async (req, res) => {
             res.status(400).json({ message: 'Email already verified!' });
         user.isActive = true;
         user = await crude_module_1.default.updateUser(user);
+        req.user = user;
         res.redirect('https://dash.pricyn.com/');
     }
     catch (err) {

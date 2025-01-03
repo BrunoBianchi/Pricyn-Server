@@ -98,6 +98,14 @@ __decorate([
 ], User.prototype, "newsletter", void 0);
 __decorate([
     (0, typeorm_1.Column)({
+        name: 'plan',
+        type: 'string',
+        default: 'free'
+    }),
+    __metadata("design:type", String)
+], User.prototype, "plan", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
         name: 'verifyUrl',
         type: 'string',
         default: false
