@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification - Pricyn</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333333;
+        }
+
+        .header {
+            background-color: #032b34;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #ffffff;
+        }
+        .content {
+            padding: 20px 30px;
+            text-align: center;
+            background-color: #ffffff;
+        }
+        .content p {
+            color: #032b34;
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #73fc8a;
+            color: #032b34;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 30px;
+            margin-bottom: 20px;
+        }
+        .button:hover {
+            background-color: rgb(79, 255, 108);
+        }
+        .footer {
+            background-color: white;
+            font-size: 12px;
+            color: #666666;
+            text-align: center;
+            padding: 15px;
+            border-top: 1px solid rgb(166, 166, 166);
+        }
+        .footer a {
+            color: #00b894;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Pricyn</h1>
+        </div>
+        <div class="content">
+            <p>To access Pricyn, please click the button below to verify your email address:</p>
+            <a href="{{url}}" class="button">Verify Email</a>
+            <p>We are excited to have you on board!</p>
+            <p>Best regards, <br>The Pricyn Team</p>
+        </div>
+        <div class="footer">
+            <p>You are receiving this email because you registered with Pricyn using this email address. If you did not sign up, please ignore this message.</p>
+        </div>
+    </div>
+</body>
+</html>
