@@ -62,6 +62,10 @@ class EmailModule {
             to: [to],
             subject,
             html: emailBody // Usa o HTML gerado com a substituição
+        }).then((msg) => {
+            console.log(msg);
+        }).catch((err) => {
+            console.log(err);
         });
     }
 }
