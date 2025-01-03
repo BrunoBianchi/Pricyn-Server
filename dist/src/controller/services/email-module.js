@@ -52,7 +52,7 @@ class EmailModule {
         const hash = await jwt_module_1.default.signIn({ email: to });
         const url = `https://api.pricyn.com/mail/verify-email?token=${hash}`;
         // Carregar o template HTML
-        const templatePath = './src/controller/templates/email-template.html';
+        const templatePath = './dist/src/controller/templates/email-template.html';
         let emailBody = fs.readFileSync(templatePath, 'utf8');
         // Substituir o placeholder {{url}} pelo valor dinâmico
         emailBody = emailBody.replace('{{url}}', url);

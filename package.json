@@ -29,8 +29,7 @@
    "scripts": {
       "start": "nodemon ./src/main.ts",
       "build": "npx tsc --incremental false && xcopy /E /I src\\controller\\templates dist\\src\\controller\\templates && git add . && git commit -m 'build' && git push",
-      "typeorm": "typeorm-ts-node-commonjs",
-      "copy-templates": "copyfiles -u 1 src/templates/**/* dist/templates"
+      "typeorm": "typeorm-ts-node-commonjs"
 
    }
 }
