@@ -13,7 +13,7 @@ data_source_1.AppDataSource.initialize()
     app.use(express_1.default.json());
     app.use(routes_routing_module_1.default);
     app.use('*', (req, res) => {
-        res.send("404 - Page not found ");
+        res.json("404 - Page not found! ");
     });
     app.listen(5000, () => console.log('Server running on port 5000'));
 })
