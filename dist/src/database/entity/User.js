@@ -15,12 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const typeorm_1 = require("typeorm");
 const bcrypt_module_1 = __importDefault(require("../../controller/services/bcrypt-module"));
+const uuid_1 = require("uuid");
 let User = class User {
     constructor() {
         this.createdAt = new Date();
     }
     async hashPassword() {
         this.password = await bcrypt_module_1.default.hash(this.password);
+    }
+    async generateVerifyUrl() {
+        this.verificationUid = (0, uuid_1.v4)();
     }
 };
 exports.User = User;
@@ -92,6 +96,20 @@ __decorate([
     }),
     __metadata("design:type", Boolean)
 ], User.prototype, "newsletter", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        name: 'verifyUrl',
+        type: 'string',
+        default: false
+    }),
+    __metadata("design:type", String)
+], User.prototype, "verificationUid", void 0);
+__decorate([
+    (0, typeorm_1.BeforeInsert)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], User.prototype, "generateVerifyUrl", null);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)({
         name: 'users',

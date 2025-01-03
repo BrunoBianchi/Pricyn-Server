@@ -41,7 +41,7 @@ const mailgun_js_1 = __importDefault(require("mailgun.js"));
 const mailgun = new mailgun_js_1.default(form_data_1.default);
 const dotenv_1 = __importDefault(require("dotenv"));
 const fs = __importStar(require("fs"));
-const jwt_module_1 = __importDefault(require("./jwt-module"));
+const crude_module_1 = __importDefault(require("./crude-module"));
 dotenv_1.default.config();
 const mg = mailgun.client({
     username: 'no-reply@mail.pricyn.com',
@@ -49,8 +49,8 @@ const mg = mailgun.client({
 });
 class EmailModule {
     async sendVerificationEmail(to, subject) {
-        const hash = await jwt_module_1.default.signIn({ email: to });
-        const url = `https://api.pricyn.com/mail/verify-email?token=${hash}`;
+        const user = await crude_module_1.default.findByEmail(to);
+        const url = `https://api.pricyn.com/mail/verify-email?token=${user.verificationUid}`;
         // Carregar o template HTML
         const templatePath = './dist/src/controller/templates/email-template.html';
         let emailBody = fs.readFileSync(templatePath, 'utf8');
