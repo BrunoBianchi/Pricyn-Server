@@ -13,10 +13,10 @@ data_source_1.AppDataSource.initialize()
     app.use(express_1.default.json());
     app.use(routes_routing_module_1.default);
     app.get('*', (req, res) => {
-        res.json("404 - Page not found !!");
+        res.json("404 - Page not found !");
     });
     app.post('*', (req, res) => {
-        res.json("404 - Page not found !!");
+        res.json("404 - Page not found !");
     });
     app.listen(3000, () => console.log('Server running on port 3000'));
 })
