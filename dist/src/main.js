@@ -18,7 +18,7 @@ data_source_1.AppDataSource.initialize()
     app.post('*', (req, res) => {
         res.json("404 - Page not found !");
     });
-    app.listen(3000, () => console.log('Server running on port 3000'));
+    app.listen(5000, () => console.log('Server running on port 5000'));
 })
     .catch(error => console.log("Data Source initialization error:", error));
 //# sourceMappingURL=main.js.map
