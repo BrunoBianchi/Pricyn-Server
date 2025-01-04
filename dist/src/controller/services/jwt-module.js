@@ -49,7 +49,7 @@ class JWT {
             .setIssuedAt()
             .setIssuer('urn:Pricyn:Server')
             .setAudience('urn:Pricyn:Client&Server')
-            .setExpirationTime('2h')
+            .setExpirationTime('1d')
             .sign(secret);
         return jwt;
     }
