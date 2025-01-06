@@ -18,6 +18,9 @@ class CrudeModule {
     async findByEmail(email) {
         return await data_source_1.AppDataSource.manager.findOneBy(User_1.User, { email });
     }
+    async findByUID(uid) {
+        return await data_source_1.AppDataSource.manager.findOneBy(User_1.User, { uid });
+    }
     async findByVerificatioUID(verificationUid) {
         return await data_source_1.AppDataSource.manager.findOneBy(User_1.User, { verificationUid });
     }

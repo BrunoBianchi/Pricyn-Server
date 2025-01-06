@@ -10,7 +10,6 @@ const crude_module_1 = __importDefault(require("../services/crude-module"));
 const authorizationMiddleware = async (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
-        console.log(authHeader.startsWith("Bearer "));
         // Verifica se o cabeçalho de autorização existe e segue o formato "Bearer token"
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
             return res.status(401).json({ message: "Unauthorized" });
@@ -30,7 +29,6 @@ const authorizationMiddleware = async (req, res, next) => {
         next(); // Passa para o próximo middleware
     }
     catch (err) {
-        console.log(err);
         return res.status(401).json({ message: "Unauthorized" });
     }
 };

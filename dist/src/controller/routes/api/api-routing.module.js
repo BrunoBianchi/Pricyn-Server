@@ -7,6 +7,8 @@ exports.api = void 0;
 const express_1 = __importDefault(require("express"));
 exports.api = express_1.default.Router();
 exports.api.use('/user', require('./user/user-module').route);
+exports.api.use('/oauth', require('./oauth/oauth-routing.module').route);
 exports.api.use('/auth', require('./auth/auth-module').route);
 exports.api.use('/mail', require('./mail/mail-module').route);
+exports.api.use('/products', require('./products/products-module').route);
 //# sourceMappingURL=api-routing.module.js.map
