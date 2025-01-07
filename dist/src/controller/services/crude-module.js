@@ -25,7 +25,9 @@ class CrudeModule {
         return await data_source_1.AppDataSource.manager.findOneBy(User_1.User, { verificationUid });
     }
     async findByEmaiAndPassword(email, password) {
+        console.log(email, password);
         const user = await this.findByEmail(email);
+        console.log(user);
         if (user) {
             const match = await bcrypt_module_1.default.compare(password, user.password);
             if (match) {

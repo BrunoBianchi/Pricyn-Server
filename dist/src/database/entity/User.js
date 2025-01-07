@@ -8,9 +8,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const typeorm_1 = require("typeorm");
+const bcrypt_module_1 = __importDefault(require("../../controller/services/bcrypt-module"));
 const uuid_1 = require("uuid");
 let User = class User {
     constructor() {
@@ -18,6 +22,9 @@ let User = class User {
     }
     async generateUid() {
         this.uid = (0, uuid_1.v4)();
+    }
+    async hashPassword() {
+        this.password = await bcrypt_module_1.default.hash(this.password);
     }
     async generateVerifyUrl() {
         this.verificationUid = (0, uuid_1.v4)();
@@ -69,6 +76,12 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
+__decorate([
+    (0, typeorm_1.BeforeInsert)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], User.prototype, "hashPassword", null);
 __decorate([
     (0, typeorm_1.CreateDateColumn)({
         name: 'created_at',

@@ -44,12 +44,14 @@ exports.route.post('/login', async (req, res) => {
             password: zod_1.z.string(),
         }).parse(req.body);
         const user = await crude_module_1.default.findByEmaiAndPassword(body.email, body.password);
+        console.log(user);
         if (!user)
             throw new Error('Email Or Password is incorrect');
         const token = await jwt_module_1.default.signIn(user);
         res.status(200).json({ message: 'Logged in ', data: token });
     }
     catch (err) {
+        console.log(err);
         res.status(400).json({ message: 'Email Or Password is incorrect' });
     }
 });
