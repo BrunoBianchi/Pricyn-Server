@@ -9,13 +9,17 @@ exports.route = express_1.default.Router();
 const cors_1 = __importDefault(require("cors"));
 const stripe_1 = __importDefault(require("stripe"));
 const stripe = new stripe_1.default(process.env.STRIPE_SECRET_KEY);
+const crude_module_1 = __importDefault(require("../../../../services/crude-module"));
+const connections_module_1 = __importDefault(require("../../../../services/connections-module"));
 const oauth_module_1 = __importDefault(require("../../../../services/oauth-module"));
 exports.route.use((0, cors_1.default)({
     origin: ['https://dash.pricyn.com', 'https://www.pricyn.com', 'https://pricyn.com', 'http://localhost:3000', 'http://localhost:4200'],
     optionsSuccessStatus: 200
 }));
 exports.route.get('/login', async (req, res) => {
-    res.redirect(await oauth_module_1.default.generateStripeLink());
+    const uid = req.query.uid;
+    const url = await oauth_module_1.default.generateStripeLink(uid);
+    res.redirect(url);
 });
 exports.route.get('/callback', async (req, res) => {
     const { code, state } = req.query;
@@ -24,6 +28,12 @@ exports.route.get('/callback', async (req, res) => {
             grant_type: 'authorization_code',
             code: code,
         });
+        const user = await crude_module_1.default.findByUID(state);
+        const connection = {
+            name: 'stripe',
+            id: response.stripe_user_id,
+        };
+        await connections_module_1.default.addConnection(user, connection);
         // Ao invés de retornar JSON, enviar mensagem para janela principal
         res.send(`
         <script>
@@ -32,7 +42,7 @@ exports.route.get('/callback', async (req, res) => {
               type: 'stripe-connect-callback', 
               access_token: '${response.access_token}',
               refresh_token: '${response.refresh_token}',
-              stripe_user_id: '${response.stripe_user_id}',
+              user: '${JSON.stringify(user)}',
             }, 
             '*'
           );
@@ -41,6 +51,7 @@ exports.route.get('/callback', async (req, res) => {
       `);
     }
     catch (err) {
+        console.log(err);
         res.status(500).send('Falha ao conectar a conta.');
     }
 });

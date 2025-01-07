@@ -20,6 +20,8 @@ exports.route.get('/@me', (req, res) => {
             createdAt: req.user.createdAt,
             isActive: req.user.isActive,
             plan: req.user.plan,
+            uid: req.user.uid,
+            connections: req.user.connections
         } });
 });
 //# sourceMappingURL=user-module.js.map
