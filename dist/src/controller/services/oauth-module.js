@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class OauthModule {
     async generateStripeLink(uid) {
-        console.log("aeae");
         const state = uid;
         const args = new URLSearchParams({
             state,
@@ -10,8 +9,6 @@ class OauthModule {
             scope: "read_write",
             response_type: "code",
         });
-        console.log("a");
-        console.log(state);
         return `https://connect.stripe.com/oauth/authorize?${args.toString()}`;
     }
 }

@@ -9,6 +9,7 @@ const typeorm_1 = require("typeorm");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const User_1 = require("./entity/User");
+const Products_1 = require("./entity/Products");
 exports.AppDataSource = new typeorm_1.DataSource({
     type: "cockroachdb",
     url: process.env.DATABASE_URL,
@@ -18,7 +19,7 @@ exports.AppDataSource = new typeorm_1.DataSource({
     },
     synchronize: true,
     logging: false,
-    entities: [User_1.User],
+    entities: [User_1.User, Products_1.Products],
     entitySkipConstructor: true,
     timeTravelQueries: false
 });
