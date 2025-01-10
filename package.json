@@ -30,7 +30,7 @@
    },
    "scripts": {
       "start": "nodemon ./src/main.ts",
-      "build": "npx tsc --incremental false && xcopy /E /I src\\controller\\templates dist\\src\\controller\\templates && git add . && git commit -m 'build' && git push",
+      "build": "npx tsc --incremental false && xcopy /E /I src\\controller\\templates dist\\src\\controller\\templates && xcopy /E /I src\\assets dist\\src\\assets && git add . && git commit -m 'build' && git push",
       "typeorm": "typeorm-ts-node-commonjs"
    }
 }

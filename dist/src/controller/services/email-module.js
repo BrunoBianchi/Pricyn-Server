@@ -68,6 +68,22 @@ class EmailModule {
             console.log(err);
         });
     }
+    async sendWishlist(to, subject) {
+        // Carregar o template HTML
+        const templatePath = './dist/src/controller/templates/wishlist-template.html';
+        let emailBody = fs.readFileSync(templatePath, 'utf8');
+        // Enviar o email usando o Mailgun
+        mg.messages.create('mail.pricyn.com', {
+            from: "no-reply@mail.pricyn.com",
+            to: [to],
+            subject,
+            html: emailBody // Usa o HTML gerado com a substituição
+        }).then((msg) => {
+            console.log(msg);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
 }
 exports.default = new EmailModule();
 //# sourceMappingURL=email-module.js.map

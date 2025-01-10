@@ -11,4 +11,5 @@ exports.api.use('/oauth', require('./oauth/oauth-routing.module').route);
 exports.api.use('/auth', require('./auth/auth-module').route);
 exports.api.use('/mail', require('./mail/mail-module').route);
 exports.api.use('/products', require('./products/products-module').route);
+exports.api.use('/wishlist', require('./wishlist/wishlist-module').route);
 //# sourceMappingURL=api-routing.module.js.map

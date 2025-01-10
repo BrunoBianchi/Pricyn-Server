@@ -10,6 +10,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const User_1 = require("./entity/User");
 const Products_1 = require("./entity/Products");
+const wishList_1 = require("./entity/wishList");
 exports.AppDataSource = new typeorm_1.DataSource({
     type: "cockroachdb",
     url: process.env.DATABASE_URL,
@@ -19,7 +20,7 @@ exports.AppDataSource = new typeorm_1.DataSource({
     },
     synchronize: true,
     logging: false,
-    entities: [User_1.User, Products_1.Products],
+    entities: [User_1.User, Products_1.Products, wishList_1.WishList],
     entitySkipConstructor: true,
     timeTravelQueries: false
 });

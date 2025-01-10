@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Verification - Pricyn</title>
+    <title>Welcome to Pricyn Waitlist!</title>
     <style>
         body {
             margin: 0;
@@ -43,6 +43,13 @@
             background-color: #ffffff;
         }
 
+        .waitlist-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #20c998;
+            margin: 20px 0;
+        }
+
         .content h2 {
             color: #13181f;
             font-size: 24px;
@@ -55,6 +62,24 @@
             font-size: 16px;
             line-height: 1.6;
             margin-bottom: 24px;
+        }
+
+        .feature-list {
+            text-align: left;
+            margin: 30px 0;
+            padding: 0 20px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #4a5568;
+        }
+
+        .feature-item i {
+            color: #20c998;
+            margin-right: 10px;
         }
 
         .button {
@@ -73,6 +98,13 @@
         .button:hover {
             transform: translateY(-2px);
             background: linear-gradient(135deg, #23e3ac, #1cc091);
+        }
+
+        .social-share {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
         }
 
         .divider {
@@ -101,12 +133,6 @@
             text-decoration: none;
         }
 
-        .support-text {
-            font-size: 13px;
-            color: #a0aec0;
-            margin-top: 20px;
-        }
-
         @media only screen and (max-width: 600px) {
             .container {
                 margin: 0;
@@ -128,16 +154,46 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="../../assets/pricyn-logo.png" alt="Pricyn" class="logo">
+            <img src="https://yourwebsite.com/path-to-your-logo.png" alt="Pricyn" class="logo">
         </div>
         <div class="content">
-            <h2>Verify your email address</h2>
-            <p>Welcome to Pricyn! We're excited to have you join us. To get started, please verify your email address by clicking the button below:</p>
-            <a href="{{url}}" class="button">Verify Email</a>
-            <p>If the button doesn't work, you can also copy and paste this link into your browser:</p>
-            <p style="font-size: 13px; color: #718096;">{{url}}</p>
+            <h2>Welcome to the Pricyn Waitlist! 🎉</h2>
+            <p>You're officially on the list to be one of our first users!</p>
+            <br>
+
+            <p>We're working hard to revolutionize how businesses handle their pricing globally. While you wait, here's what you can look forward to:</p>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    Early access to our platform
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    Exclusive founding member benefits
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    Priority support and onboarding
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    Special launch pricing
+                </div>
+            </div>
+
+            <div class="social-share">
+                <p>Want to move up in line? Share Pricyn with others!</p>
+                <a href="https://twitter.com/intent/tweet?text=I%20just%20joined%20the%20waitlist%20for%20@Pricyn%20-%20the%20future%20of%20global%20pricing%20optimization!%20Join%20me%20at%20https://pricyn.com" class="button">
+                    Share on Twitter
+                </a>
+            </div>
+
             <div class="divider"></div>
-            <p style="font-size: 14px; color: #4a5568;">Need help? Contact our support team at <a href="mailto:support@pricyn.com" style="color: #20c998; text-decoration: none;">support@pricyn.com</a></p>
+
+            <p>We'll keep you updated on our progress and let you know as soon as we're ready to welcome you aboard.</p>
+            
+            <p>Have questions? Reach out to us at <a href="mailto:support@pricyn.com" style="color: #20c998; text-decoration: none;">support@pricyn.com</a></p>
         </div>
         <div class="footer">
             <div class="social-links">
@@ -146,7 +202,7 @@
                 <a href="#" class="social-link">GitHub</a>
             </div>
             <p>© 2025 Pricyn. All rights reserved.</p>
-            <p class="support-text">You are receiving this email because you registered with Pricyn using this email address. If you did not sign up, please ignore this message.</p>
+            <p style="font-size: 13px; color: #a0aec0; margin-top: 20px;">You received this email because you joined the Pricyn waitlist. If you didn't request this, you can safely ignore this message.</p>
         </div>
     </div>
 </body>
