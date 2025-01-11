@@ -30,7 +30,7 @@ __decorate([
 ], WishList.prototype, "email", void 0);
 exports.WishList = WishList = __decorate([
     (0, typeorm_1.Entity)({
-        name: 'wishlists',
+        name: 'waitlist',
         schema: 'public'
     })
 ], WishList);

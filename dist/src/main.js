@@ -12,6 +12,7 @@ data_source_1.AppDataSource.initialize()
     .then(() => {
     app.use(express_1.default.json());
     app.use(routes_routing_module_1.default);
+    app.use(express_1.default.static(__dirname + '/assets/'));
     app.use('*', (req, res) => {
         res.json("404 - Page not found! ");
     });

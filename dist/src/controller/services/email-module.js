@@ -53,7 +53,6 @@ class EmailModule {
         const url = `https://api.pricyn.com/mail/verify-email?token=${user.verificationUid}`;
         // Ler o template e a imagem
         const templatePath = './dist/src/controller/templates/email-template.html';
-        const logoPath = './dist/src/assets/pricyn-logo.png';
         let emailBody = fs.readFileSync(templatePath, 'utf8');
         // Substituir placeholders
         emailBody = emailBody.replace(/\{\{url\}\}/g, url);
@@ -63,14 +62,6 @@ class EmailModule {
                 to: [to],
                 subject,
                 html: emailBody,
-                inline: [{
-                        filename: 'pricyn-logo.png',
-                        data: fs.readFileSync(logoPath),
-                        contentType: 'image/png',
-                        knownLength: fs.statSync(logoPath).size,
-                        contentDisposition: 'inline',
-                        contentId: 'pricyn-logo' // Este ID deve corresponder ao 'cid:' no HTML
-                    }]
             });
             console.log('Email enviado:', msg);
         }
@@ -81,7 +72,6 @@ class EmailModule {
     }
     async sendWishlist(to, subject) {
         const templatePath = './dist/src/controller/templates/wishlist-template.html';
-        const logoPath = './dist/src/assets/pricyn-logo.png';
         let emailBody = fs.readFileSync(templatePath, 'utf8');
         try {
             const msg = await mg.messages.create('mail.pricyn.com', {
@@ -89,14 +79,6 @@ class EmailModule {
                 to: [to],
                 subject,
                 html: emailBody,
-                inline: [{
-                        filename: 'pricyn-logo.png',
-                        data: fs.readFileSync(logoPath),
-                        contentType: 'image/png',
-                        knownLength: fs.statSync(logoPath).size,
-                        contentDisposition: 'inline',
-                        contentId: 'pricyn-logo'
-                    }]
             });
             console.log('Email enviado:', msg);
         }
