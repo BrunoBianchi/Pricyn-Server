@@ -71,7 +71,9 @@ class EmailModule {
     async sendWishlist(to, subject) {
         // Carregar o template HTML
         const templatePath = './dist/src/controller/templates/wishlist-template.html';
+        const logoPath = './dist/src/assets/pricyn-logo.png';
         let emailBody = fs.readFileSync(templatePath, 'utf8');
+        emailBody = emailBody.replace('{{logo}}', logoPath);
         // Enviar o email usando o Mailgun
         mg.messages.create('mail.pricyn.com', {
             from: "no-reply@mail.pricyn.com",
