@@ -53,9 +53,11 @@ class EmailModule {
         const url = `https://api.pricyn.com/mail/verify-email?token=${user.verificationUid}`;
         // Carregar o template HTML
         const templatePath = './dist/src/controller/templates/email-template.html';
+        const logoPath = './dist/src/assets/pricyn-logo.png';
         let emailBody = fs.readFileSync(templatePath, 'utf8');
         // Substituir o placeholder {{url}} pelo valor dinâmico
         emailBody = emailBody.replace('{{url}}', url);
+        emailBody = emailBody.replace('{{logo}}', logoPath);
         // Enviar o email usando o Mailgun
         mg.messages.create('mail.pricyn.com', {
             from: "no-reply@mail.pricyn.com",
