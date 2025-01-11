@@ -38,10 +38,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const form_data_1 = __importDefault(require("form-data"));
 const mailgun_js_1 = __importDefault(require("mailgun.js"));
-const dotenv_1 = __importDefault(require("dotenv"));
 const fs = __importStar(require("fs"));
+const path = __importStar(require("path"));
 const crude_module_1 = __importDefault(require("./crude-module"));
-dotenv_1.default.config();
 const mailgun = new mailgun_js_1.default(form_data_1.default);
 const mg = mailgun.client({
     username: 'no-reply@mail.pricyn.com',
@@ -51,27 +50,22 @@ class EmailModule {
     async sendVerificationEmail(to, subject) {
         const user = await crude_module_1.default.findByEmail(to);
         const url = `https://api.pricyn.com/mail/verify-email?token=${user.verificationUid}`;
-        // Ler o template e a imagem
-        const templatePath = './dist/src/controller/templates/email-template.html';
+        // Caminhos dos arquivos
+        const templatePath = path.join(__dirname, 'templates/email-template.html');
+        const logoPath = path.join(__dirname, '../assets/P.svg');
+        // Criar stream do logo
+        const logoStream = fs.createReadStream(logoPath);
+        // Ler e ajustar o template HTML
         let emailBody = fs.readFileSync(templatePath, 'utf8');
-        const logoPath = __dirname + './dist/src/assets/P.svg';
-        // Substituir placeholders
+        emailBody = emailBody.replace('<img src="https://api.pricyn.com/P.svg"', '<img src="cid:P.svg"');
         emailBody = emailBody.replace(/\{\{url\}\}/g, url);
-        emailBody = emailBody.replace('<img src="https://api.pricyn.com/P.svg"', '<img src="cid:logo-pricyn"');
         try {
             const msg = await mg.messages.create('mail.pricyn.com', {
                 from: "no-reply@mail.pricyn.com",
                 to: [to],
                 subject,
                 html: emailBody,
-                inline: [{
-                        filename: 'logo-pricyn.svg',
-                        data: fs.readFileSync(logoPath),
-                        contentType: 'image/svg+xml',
-                        knownLength: fs.statSync(logoPath).size,
-                        contentDisposition: 'inline',
-                        contentId: 'logo-pricyn'
-                    }]
+                inline: [logoStream]
             });
             console.log('Email enviado:', msg);
         }
@@ -81,14 +75,20 @@ class EmailModule {
         }
     }
     async sendWishlist(to, subject) {
-        const templatePath = './dist/src/controller/templates/wishlist-template.html';
+        const templatePath = path.join(__dirname, 'templates/wishlist-template.html');
+        const logoPath = path.join(__dirname, '../assets/P.svg');
+        // Criar stream do logo
+        const logoStream = fs.createReadStream(logoPath);
+        // Ler e ajustar o template
         let emailBody = fs.readFileSync(templatePath, 'utf8');
+        emailBody = emailBody.replace('<img src="https://api.pricyn.com/P.svg"', '<img src="cid:P.svg"');
         try {
             const msg = await mg.messages.create('mail.pricyn.com', {
                 from: "no-reply@mail.pricyn.com",
                 to: [to],
                 subject,
                 html: emailBody,
+                inline: [logoStream]
             });
             console.log('Email enviado:', msg);
         }
