@@ -38,11 +38,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const form_data_1 = __importDefault(require("form-data"));
 const mailgun_js_1 = __importDefault(require("mailgun.js"));
-const mailgun = new mailgun_js_1.default(form_data_1.default);
 const dotenv_1 = __importDefault(require("dotenv"));
 const fs = __importStar(require("fs"));
 const crude_module_1 = __importDefault(require("./crude-module"));
 dotenv_1.default.config();
+const mailgun = new mailgun_js_1.default(form_data_1.default);
 const mg = mailgun.client({
     username: 'no-reply@mail.pricyn.com',
     key: process.env.MAILGUN_API_KEY,
@@ -51,42 +51,59 @@ class EmailModule {
     async sendVerificationEmail(to, subject) {
         const user = await crude_module_1.default.findByEmail(to);
         const url = `https://api.pricyn.com/mail/verify-email?token=${user.verificationUid}`;
-        // Carregar o template HTML
+        // Ler o template e a imagem
         const templatePath = './dist/src/controller/templates/email-template.html';
         const logoPath = './dist/src/assets/pricyn-logo.png';
         let emailBody = fs.readFileSync(templatePath, 'utf8');
-        // Substituir o placeholder {{url}} pelo valor dinâmico
-        emailBody = emailBody.replace('{{url}}', url);
-        emailBody = emailBody.replace('{{logo}}', logoPath);
-        // Enviar o email usando o Mailgun
-        mg.messages.create('mail.pricyn.com', {
-            from: "no-reply@mail.pricyn.com",
-            to: [to],
-            subject,
-            html: emailBody // Usa o HTML gerado com a substituição
-        }).then((msg) => {
-            console.log(msg);
-        }).catch((err) => {
-            console.log(err);
-        });
+        // Substituir placeholders
+        emailBody = emailBody.replace(/\{\{url\}\}/g, url);
+        try {
+            const msg = await mg.messages.create('mail.pricyn.com', {
+                from: "no-reply@mail.pricyn.com",
+                to: [to],
+                subject,
+                html: emailBody,
+                inline: [{
+                        filename: 'pricyn-logo.png',
+                        data: fs.readFileSync(logoPath),
+                        contentType: 'image/png',
+                        knownLength: fs.statSync(logoPath).size,
+                        contentDisposition: 'inline',
+                        contentId: 'pricyn-logo' // Este ID deve corresponder ao 'cid:' no HTML
+                    }]
+            });
+            console.log('Email enviado:', msg);
+        }
+        catch (err) {
+            console.error('Erro ao enviar email:', err);
+            throw err;
+        }
     }
     async sendWishlist(to, subject) {
-        // Carregar o template HTML
         const templatePath = './dist/src/controller/templates/wishlist-template.html';
         const logoPath = './dist/src/assets/pricyn-logo.png';
         let emailBody = fs.readFileSync(templatePath, 'utf8');
-        emailBody = emailBody.replace('{{logo}}', logoPath);
-        // Enviar o email usando o Mailgun
-        mg.messages.create('mail.pricyn.com', {
-            from: "no-reply@mail.pricyn.com",
-            to: [to],
-            subject,
-            html: emailBody // Usa o HTML gerado com a substituição
-        }).then((msg) => {
-            console.log(msg);
-        }).catch((err) => {
-            console.log(err);
-        });
+        try {
+            const msg = await mg.messages.create('mail.pricyn.com', {
+                from: "no-reply@mail.pricyn.com",
+                to: [to],
+                subject,
+                html: emailBody,
+                inline: [{
+                        filename: 'pricyn-logo.png',
+                        data: fs.readFileSync(logoPath),
+                        contentType: 'image/png',
+                        knownLength: fs.statSync(logoPath).size,
+                        contentDisposition: 'inline',
+                        contentId: 'pricyn-logo'
+                    }]
+            });
+            console.log('Email enviado:', msg);
+        }
+        catch (err) {
+            console.error('Erro ao enviar email:', err);
+            throw err;
+        }
     }
 }
 exports.default = new EmailModule();
