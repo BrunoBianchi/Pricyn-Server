@@ -54,14 +54,24 @@ class EmailModule {
         // Ler o template e a imagem
         const templatePath = './dist/src/controller/templates/email-template.html';
         let emailBody = fs.readFileSync(templatePath, 'utf8');
+        const logoPath = __dirname + './dist/src/assets/P.svg';
         // Substituir placeholders
         emailBody = emailBody.replace(/\{\{url\}\}/g, url);
+        emailBody = emailBody.replace('<img src="https://api.pricyn.com/P.svg"', '<img src="cid:logo-pricyn"');
         try {
             const msg = await mg.messages.create('mail.pricyn.com', {
                 from: "no-reply@mail.pricyn.com",
                 to: [to],
                 subject,
                 html: emailBody,
+                inline: [{
+                        filename: 'logo-pricyn.svg',
+                        data: fs.readFileSync(logoPath),
+                        contentType: 'image/svg+xml',
+                        knownLength: fs.statSync(logoPath).size,
+                        contentDisposition: 'inline',
+                        contentId: 'logo-pricyn'
+                    }]
             });
             console.log('Email enviado:', msg);
         }
