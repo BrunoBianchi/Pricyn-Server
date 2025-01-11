@@ -39,7 +39,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const form_data_1 = __importDefault(require("form-data"));
 const mailgun_js_1 = __importDefault(require("mailgun.js"));
 const fs = __importStar(require("fs"));
-const path = __importStar(require("path"));
 const crude_module_1 = __importDefault(require("./crude-module"));
 const mailgun = new mailgun_js_1.default(form_data_1.default);
 const mg = mailgun.client({
@@ -51,13 +50,9 @@ class EmailModule {
         const user = await crude_module_1.default.findByEmail(to);
         const url = `https://api.pricyn.com/mail/verify-email?token=${user.verificationUid}`;
         // Caminhos dos arquivos
-        const templatePath = path.join(__dirname, 'templates/email-template.html');
-        const logoPath = path.join(__dirname, '../assets/P.svg');
-        // Criar stream do logo
-        const logoStream = fs.createReadStream(logoPath);
+        const templatePath = './dist/src/controller/templates/email-template.html';
         // Ler e ajustar o template HTML
         let emailBody = fs.readFileSync(templatePath, 'utf8');
-        emailBody = emailBody.replace('<img src="https://api.pricyn.com/P.svg"', '<img src="cid:P.svg"');
         emailBody = emailBody.replace(/\{\{url\}\}/g, url);
         try {
             const msg = await mg.messages.create('mail.pricyn.com', {
@@ -65,7 +60,6 @@ class EmailModule {
                 to: [to],
                 subject,
                 html: emailBody,
-                inline: [logoStream]
             });
             console.log('Email enviado:', msg);
         }
@@ -75,20 +69,15 @@ class EmailModule {
         }
     }
     async sendWishlist(to, subject) {
-        const templatePath = path.join(__dirname, 'templates/wishlist-template.html');
-        const logoPath = path.join(__dirname, '../assets/P.svg');
-        // Criar stream do logo
-        const logoStream = fs.createReadStream(logoPath);
+        const templatePath = './dist/src/controller/templates/wishlist-template.html';
         // Ler e ajustar o template
         let emailBody = fs.readFileSync(templatePath, 'utf8');
-        emailBody = emailBody.replace('<img src="https://api.pricyn.com/P.svg"', '<img src="cid:P.svg"');
         try {
             const msg = await mg.messages.create('mail.pricyn.com', {
                 from: "no-reply@mail.pricyn.com",
                 to: [to],
                 subject,
                 html: emailBody,
-                inline: [logoStream]
             });
             console.log('Email enviado:', msg);
         }
