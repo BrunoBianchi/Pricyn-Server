@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const crude_module_1 = __importDefault(require("./crude-module"));
 class ConnectionsModule {
     async addConnection(user, connection) {
+        if (!user)
+            return null;
         if (!user.connections) {
             user.connections = [];
         }

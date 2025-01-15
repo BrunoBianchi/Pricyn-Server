@@ -12,6 +12,7 @@ const stripe = new stripe_1.default(process.env.STRIPE_SECRET_KEY);
 const crude_module_1 = __importDefault(require("../../../../services/crude-module"));
 const connections_module_1 = __importDefault(require("../../../../services/connections-module"));
 const oauth_module_1 = __importDefault(require("../../../../services/oauth-module"));
+const notifications_module_1 = __importDefault(require("../../../../services/notifications-module"));
 exports.route.use((0, cors_1.default)({
     origin: ['https://dash.pricyn.com', 'https://www.pricyn.com', 'https://pricyn.com', 'http://localhost:3000', 'http://localhost:4200'],
     optionsSuccessStatus: 200
@@ -19,7 +20,7 @@ exports.route.use((0, cors_1.default)({
 exports.route.get('/login', async (req, res) => {
     const uid = req.query.uid;
     const url = await oauth_module_1.default.generateStripeLink(uid);
-    res.redirect(url);
+    return res.redirect(url);
 });
 exports.route.get('/callback', async (req, res) => {
     const { code, state } = req.query;
@@ -34,7 +35,11 @@ exports.route.get('/callback', async (req, res) => {
             id: response.stripe_user_id,
         };
         await connections_module_1.default.addConnection(user, connection);
-        // Ao invés de retornar JSON, enviar mensagem para janela principal
+        await notifications_module_1.default.addNotification({
+            userUid: user.uid, header: 'Stripe Account Connected!', content: ` #### [Products](/products) 🌐`, read: false
+        }).then(a => {
+            console.log(a);
+        });
         res.send(`
         <script>
           window.opener.postMessage(

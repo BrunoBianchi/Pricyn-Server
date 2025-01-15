@@ -10,7 +10,7 @@ class CrudeModule {
     async createNewUser(user) {
         const existing = await this.findByEmail(user.email);
         if (!existing) {
-            const obj = data_source_1.AppDataSource.manager.create(User_1.User, user);
+            const obj = await data_source_1.AppDataSource.manager.create(User_1.User, user);
             return { status: 200, message: 'User created', data: await data_source_1.AppDataSource.manager.save(obj) };
         }
         throw new Error('User already exists');
