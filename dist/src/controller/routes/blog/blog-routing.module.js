@@ -56,7 +56,7 @@ exports.route.get('/posts/:title', (0, cors_1.default)({
     }
 });
 exports.route.get('/posts-latest', (0, cors_1.default)({
-    origin: ['www.pricyn.com', 'http://localhost:4200'],
+    origin: ['https://www.pricyn.com', 'http://localhost:4200'],
     optionsSuccessStatus: 200
 }), async (req, res) => {
     try {
