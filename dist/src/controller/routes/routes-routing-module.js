@@ -11,5 +11,6 @@ const apiLimiter = (0, express_rate_limit_1.rateLimit)({
 });
 routing.use('', apiLimiter);
 routing.use('', require('./api/api-routing.module').api);
+routing.use('/blog', require('./blog/blog-routing.module').route);
 exports.default = routing;
 //# sourceMappingURL=routes-routing-module.js.map
