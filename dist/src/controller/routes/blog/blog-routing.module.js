@@ -20,7 +20,8 @@ exports.route.post('/posts/', (0, cors_1.default)({
             title: zod_1.default.string(),
             description: zod_1.default.string(),
             images: zod_1.default.array(zod_1.default.string()).optional(),
-            markdown: zod_1.default.string().optional()
+            markdown: zod_1.default.string().optional(),
+            category: zod_1.default.array(zod_1.default.string())
         }).parse(req.body);
         const obj = data_source_1.AppDataSource.manager.create(Posts_1.Posts, post);
         res.json(await data_source_1.AppDataSource.manager.save(obj));
@@ -30,11 +31,25 @@ exports.route.post('/posts/', (0, cors_1.default)({
     }
 });
 exports.route.get('/posts/', (0, cors_1.default)({
-    origin: ['www.pricyn.com'],
+    origin: ['www.pricyn.com', 'http://localhost:4200'],
     optionsSuccessStatus: 200
 }), async (req, res) => {
     try {
         res.json(await data_source_1.AppDataSource.manager.find(Posts_1.Posts));
+    }
+    catch (err) {
+        res.status(400).json({ message: "Couldn't get post" });
+    }
+});
+exports.route.get('/posts/:title', (0, cors_1.default)({
+    origin: ['www.pricyn.com', 'http://localhost:4200'],
+    optionsSuccessStatus: 200
+}), async (req, res) => {
+    try {
+        const postTitle = req.params.title;
+        if (!postTitle)
+            res.json({ message: "No title provided" });
+        res.json(await data_source_1.AppDataSource.manager.findOne(Posts_1.Posts, { where: { title: postTitle } }));
     }
     catch (err) {
         res.status(400).json({ message: "Couldn't get post" });

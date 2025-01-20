@@ -62,6 +62,16 @@ __decorate([
     }),
     __metadata("design:type", Array)
 ], Posts.prototype, "images", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        name: 'category',
+        type: 'jsonb',
+        array: false,
+        default: () => "'[]'",
+        nullable: true
+    }),
+    __metadata("design:type", Array)
+], Posts.prototype, "category", void 0);
 exports.Posts = Posts = __decorate([
     (0, typeorm_1.Entity)({
         name: 'posts',
