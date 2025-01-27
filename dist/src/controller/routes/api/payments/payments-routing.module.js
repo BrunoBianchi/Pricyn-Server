@@ -33,7 +33,7 @@ exports.route.get('/total-amount', authorization_middleware_1.authorizationMiddl
     }
 });
 exports.route.get('/getProductInfo', (0, cors_1.default)({
-    origin: ['http://localhost:4200', 'http://localhost:3000', 'https://secure.pricyn.com', 'http://localhost:59786'],
+    origin: ['http://localhost:4200', 'http://localhost:3000', 'https://pay.pricyn.com', 'http://localhost:59786'],
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
