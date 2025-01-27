@@ -11,9 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Products = void 0;
 const typeorm_1 = require("typeorm");
+const uuid_1 = require("uuid");
 let Products = class Products {
     constructor() {
         this.createdAt = new Date();
+    }
+    generateUid() {
+        this.searchId = (0, uuid_1.v4)();
     }
 };
 exports.Products = Products;
@@ -61,6 +65,43 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], Products.prototype, "status", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        name: 'searchId',
+        type: 'string',
+    }),
+    __metadata("design:type", String)
+], Products.prototype, "searchId", void 0);
+__decorate([
+    (0, typeorm_1.BeforeInsert)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], Products.prototype, "generateUid", null);
+__decorate([
+    (0, typeorm_1.Column)({
+        name: 'impressions',
+        type: 'int',
+        default: 0
+    }),
+    __metadata("design:type", Number)
+], Products.prototype, "impressions", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        name: 'clicks',
+        type: 'int',
+        default: 0
+    }),
+    __metadata("design:type", Number)
+], Products.prototype, "clicks", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        name: 'sales',
+        type: 'int',
+        default: 0
+    }),
+    __metadata("design:type", Number)
+], Products.prototype, "sales", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         name: 'provider',

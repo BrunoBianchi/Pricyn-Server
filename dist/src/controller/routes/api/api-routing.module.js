@@ -14,4 +14,5 @@ exports.api.use('/products', require('./products/products-module').route);
 exports.api.use('/wishlist', require('./wishlist/wishlist-module').route);
 exports.api.use('/forward-url', require('./forward-urls/forward-url.module').route);
 exports.api.use('/notifications', require('./notifications/notifications-routing.module').route);
+exports.api.use('/payments', require('./payments/payments-routing.module').route);
 //# sourceMappingURL=api-routing.module.js.map

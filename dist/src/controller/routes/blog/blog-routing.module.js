@@ -19,7 +19,7 @@ exports.route.post('/posts/', (0, cors_1.default)({
         const post = zod_1.default.object({
             title: zod_1.default.string(),
             description: zod_1.default.string(),
-            images: zod_1.default.array(zod_1.default.string()).optional(),
+            images: zod_1.default.string().optional(),
             markdown: zod_1.default.string().optional(),
             category: zod_1.default.array(zod_1.default.string())
         }).parse(req.body);

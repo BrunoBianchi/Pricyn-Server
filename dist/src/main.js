@@ -4,9 +4,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const helmet_1 = __importDefault(require("helmet"));
 const routes_routing_module_1 = __importDefault(require("./controller/routes/routes-routing-module"));
 const data_source_1 = require("./database/data-source");
 const app = (0, express_1.default)();
+app.disable('x-powered-by');
+app.use((0, helmet_1.default)({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'", 'localhost:4200'],
+            scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'localhost:4200'],
+            styleSrc: ["'self'", "'unsafe-inline'", 'localhost:4200'],
+            imgSrc: ["'self'", 'data:', 'localhost:4200', 'cdn.pricyn.com'],
+            connectSrc: ["'self'", 'localhost:4200', 'localhost:5000', 'dash.pricyn.com', 'api.pricyn.com'],
+            fontSrc: ["'self'", 'data:', 'localhost:4200'],
+            objectSrc: ["'none'"],
+            mediaSrc: ["'self'"],
+            frameSrc: ["'self'", 'localhost:4200']
+        }
+    },
+    crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+    crossOriginOpenerPolicy: false
+}));
 // Initialize database first
 data_source_1.AppDataSource.initialize()
     .then(() => {

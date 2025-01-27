@@ -136,6 +136,14 @@ __decorate([
 ], User.prototype, "generateVerifyUrl", null);
 __decorate([
     (0, typeorm_1.Column)({
+        name: 'sales',
+        type: 'int',
+        default: 0
+    }),
+    __metadata("design:type", Number)
+], User.prototype, "sales", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
         name: 'connections',
         type: 'jsonb',
         array: false,

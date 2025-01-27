@@ -55,12 +55,10 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({
         name: 'images',
-        type: 'jsonb',
-        array: false,
-        default: () => "'[]'",
+        type: 'string',
         nullable: true
     }),
-    __metadata("design:type", Array)
+    __metadata("design:type", String)
 ], Posts.prototype, "images", void 0);
 __decorate([
     (0, typeorm_1.Column)({
