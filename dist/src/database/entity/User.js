@@ -114,14 +114,6 @@ __decorate([
 ], User.prototype, "newsletter", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        name: 'plan',
-        type: 'string',
-        default: 'free'
-    }),
-    __metadata("design:type", String)
-], User.prototype, "plan", void 0);
-__decorate([
-    (0, typeorm_1.Column)({
         name: 'verifyUrl',
         type: 'string',
         default: false
@@ -134,24 +126,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], User.prototype, "generateVerifyUrl", null);
-__decorate([
-    (0, typeorm_1.Column)({
-        name: 'sales',
-        type: 'int',
-        default: 0
-    }),
-    __metadata("design:type", Number)
-], User.prototype, "sales", void 0);
-__decorate([
-    (0, typeorm_1.Column)({
-        name: 'connections',
-        type: 'jsonb',
-        array: false,
-        default: () => "'[]'",
-        nullable: true
-    }),
-    __metadata("design:type", Array)
-], User.prototype, "connections", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)({
         name: 'users',

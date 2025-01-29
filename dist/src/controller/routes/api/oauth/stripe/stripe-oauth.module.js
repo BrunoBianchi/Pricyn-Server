@@ -10,7 +10,7 @@ const cors_1 = __importDefault(require("cors"));
 const stripe_1 = __importDefault(require("stripe"));
 const stripe = new stripe_1.default(process.env.STRIPE_SECRET_KEY);
 const crude_module_1 = __importDefault(require("../../../../services/crude-module"));
-const connections_module_1 = __importDefault(require("../../../../services/connections-module"));
+const organization_module_1 = __importDefault(require("../../../../services/organization-module"));
 const oauth_module_1 = __importDefault(require("../../../../services/oauth-module"));
 const notifications_module_1 = __importDefault(require("../../../../services/notifications-module"));
 exports.route.use((0, cors_1.default)({
@@ -29,12 +29,14 @@ exports.route.get('/callback', async (req, res) => {
             grant_type: 'authorization_code',
             code: code,
         });
-        const user = await crude_module_1.default.findByUID(state);
+        let organization = await organization_module_1.default.organizationExists(state);
+        const user = await crude_module_1.default.findByUID(organization.owner);
         const connection = {
             name: 'stripe',
             id: response.stripe_user_id,
         };
-        await connections_module_1.default.addConnection(user, connection);
+        organization.connections.push(connection);
+        await organization_module_1.default.upateOrganization(organization);
         await notifications_module_1.default.addNotification({
             userUid: user.uid, header: 'Stripe Account Connected!', content: ` #### [Products](/products) 🌐`, read: false
         }).then(a => {

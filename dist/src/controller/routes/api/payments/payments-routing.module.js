@@ -19,7 +19,12 @@ exports.route.post('/recieve', (0, cors_1.default)({
     await products_module_1.default.incrementProductInformation(req.body.productId, req.body.amount);
     res.status(200).json('Payment received');
 });
-exports.route.get('/total-amount', authorization_middleware_1.authorizationMiddleware, async (req, res) => {
+exports.route.get('/total-amount', (0, cors_1.default)({
+    origin: ['http://localhost:4200', 'https://dash.pricyn.com'],
+    methods: ['GET', 'OPTIONS'], // Explicitly allow needed methods
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}), authorization_middleware_1.authorizationMiddleware, async (req, res) => {
     try {
         const products = await products_module_1.default.getProductByOwner(req.user.uid);
         const total = products.reduce((acc, product) => {

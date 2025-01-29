@@ -12,6 +12,7 @@ const zod_1 = require("zod");
 const cors_1 = __importDefault(require("cors"));
 const email_module_1 = __importDefault(require("../../../services/email-module"));
 const notifications_module_1 = __importDefault(require("../../../services/notifications-module"));
+const organization_module_1 = __importDefault(require("../../../services/organization-module"));
 exports.route.use((0, cors_1.default)({
     origin: ['https://dash.pricyn.com', 'http://localhost:3000', 'http://localhost:4200'],
     optionsSuccessStatus: 200
@@ -45,6 +46,11 @@ exports.route.post('/sign-up', async (req, res) => {
         #### [Connect Providers](/connections) 🌐`, read: false
         });
         email_module_1.default.sendVerificationEmail(user.email, 'Verify your email for Pricyn');
+        let org = {
+            owner: data.data.uid,
+            name: `${user.name.trim()}'s Organization`,
+        };
+        await organization_module_1.default.createOrganization(org);
         res.set("x-access-token", token);
         res.status(data.status).json({ message: data.message, data: token });
     }
@@ -59,7 +65,6 @@ exports.route.post('/login', async (req, res) => {
             password: zod_1.z.string(),
         }).parse(req.body);
         const user = await crude_module_1.default.findByEmaiAndPassword(body.email, body.password);
-        console.log(user);
         if (!user)
             throw new Error('Email Or Password is incorrect');
         const token = await jwt_module_1.default.signIn(user);
@@ -67,7 +72,6 @@ exports.route.post('/login', async (req, res) => {
         res.status(200).json({ message: 'Logged in ', data: token });
     }
     catch (err) {
-        console.log(err);
         res.status(400).json({ message: 'Email Or Password is incorrect' });
     }
 });

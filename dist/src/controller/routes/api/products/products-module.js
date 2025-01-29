@@ -14,14 +14,20 @@ const zod_1 = require("zod");
 const products_module_1 = __importDefault(require("../../../services/products-module"));
 exports.route.use((0, cors_1.default)({
     origin: ['https://dash.pricyn.com', 'https://www.pricyn.com', 'https://pricyn.com', 'http://localhost:5000', 'http://localhost:4200'],
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'StripeAuthorization'],
+    exposedHeaders: ['Authorization', 'StripeAuthorization'],
     optionsSuccessStatus: 200
 }));
 exports.route.use(authorization_middleware_1.authorizationMiddleware);
 exports.route.use(stripe_middleware_1.stripeMiddleware);
 exports.route.get('/:provider/list', async (req, res) => {
+    const params = zod_1.z.object({
+        uid: zod_1.z.string()
+    }).parse(req.query);
     switch (req.params.provider) {
         case 'stripe':
-            const products = await products_module_1.default.mergeProducts(await products_module_1.default.getProductByOwnerAndProvider(req.user.uid, req.params.provider), await stripe_module_1.default.getProducts(req.user.stripe));
+            const products = await products_module_1.default.mergeProducts(await products_module_1.default.getProductByOwnerAndProvider(params.uid, req.params.provider), await stripe_module_1.default.getProducts(req.user.stripe));
             res.json({ products: products });
             break;
         default:
@@ -45,11 +51,13 @@ exports.route.post('/:provider/', async (req, res) => {
             })),
             uid: zod_1.z.string().optional().or(zod_1.z.null()),
         }).parse(req.body);
-        const productSaved = await products_module_1.default.createProduct(product, req.user.uid, req.headers.stripeauthorization);
+        const params = zod_1.z.object({
+            uid: zod_1.z.string()
+        }).parse(req.query);
+        const productSaved = await products_module_1.default.createProduct(product, params.uid, req.headers.stripeauthorization);
         res.json(productSaved);
     }
     catch (err) {
-        console.log(err);
         res.status(400).json({ message: err.message });
     }
 });
