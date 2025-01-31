@@ -38,7 +38,6 @@ app.use((0, helmet_1.default)({
 app.use(express_1.default.json());
 app.use(routes_routing_module_1.default);
 app.use(express_1.default.static(__dirname + '/assets/'));
-// Initialize database first
 data_source_1.AppDataSource.initialize()
     .then(() => {
     app.listen(5000, () => console.log('Server running on port 5000'));

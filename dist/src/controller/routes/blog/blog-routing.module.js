@@ -57,6 +57,9 @@ exports.route.get('/posts/:title', (0, cors_1.default)({
 });
 exports.route.get('/posts-latest', (0, cors_1.default)({
     origin: ['https://www.pricyn.com', 'http://localhost:4200', 'https://dash.pricyn.com', 'https://pricyn.com'],
+    methods: ['Get'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'stripeAuthorization'],
+    exposedHeaders: ['Authorization'],
     optionsSuccessStatus: 200
 }), async (req, res) => {
     try {
