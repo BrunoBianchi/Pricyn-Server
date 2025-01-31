@@ -29,7 +29,7 @@ app.use((0, helmet_1.default)({
     crossOriginOpenerPolicy: false
 }));
 app.use((0, cors_1.default)({
-    origin: ['http://localhost:4200', 'https://dash.pricyn.com', 'https://www.pricyn.com'],
+    origin: ['http://localhost:4200', 'https://dash.pricyn.com', 'https://www.pricyn.com', 'https://pricyn.com'],
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'stripeAuthorization'],
     credentials: true
