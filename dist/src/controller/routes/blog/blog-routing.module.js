@@ -30,10 +30,7 @@ exports.route.post('/posts/', (0, cors_1.default)({
         res.status(400).json({ message: "Couldn't create post" });
     }
 });
-exports.route.get('/posts/', (0, cors_1.default)({
-    origin: ['https://www.pricyn.com', 'http://localhost:4200'],
-    optionsSuccessStatus: 200
-}), async (req, res) => {
+exports.route.get('/posts/', async (req, res) => {
     try {
         res.json(await data_source_1.AppDataSource.manager.find(Posts_1.Posts));
     }
@@ -41,10 +38,7 @@ exports.route.get('/posts/', (0, cors_1.default)({
         res.status(400).json({ message: "Couldn't get post" });
     }
 });
-exports.route.get('/posts/:title', (0, cors_1.default)({
-    origin: ['https://www.pricyn.com', 'http://localhost:4200'],
-    optionsSuccessStatus: 200
-}), async (req, res) => {
+exports.route.get('/posts/:title', async (req, res) => {
     try {
         const postTitle = req.params.title;
         if (!postTitle)
@@ -55,13 +49,7 @@ exports.route.get('/posts/:title', (0, cors_1.default)({
         res.status(400).json({ message: "Couldn't get post" });
     }
 });
-exports.route.get('/posts-latest', (0, cors_1.default)({
-    origin: ['https://www.pricyn.com', 'http://localhost:4200', 'https://dash.pricyn.com', 'https://pricyn.com'],
-    methods: ['Get'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'stripeAuthorization'],
-    exposedHeaders: ['Authorization'],
-    optionsSuccessStatus: 200
-}), async (req, res) => {
+exports.route.get('/posts-latest', async (req, res) => {
     try {
         const postRepository = data_source_1.AppDataSource.getRepository(Posts_1.Posts);
         const latestPost = await postRepository.find({
