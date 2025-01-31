@@ -8,13 +8,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Organizations = void 0;
 const typeorm_1 = require("typeorm");
+const moment_1 = __importDefault(require("moment"));
 const uuid_1 = require("uuid");
 let Organizations = class Organizations {
     constructor() {
         this.createdAt = new Date();
+        this.plan = {
+            name: 'Free',
+            expires: (0, moment_1.default)().add(1, 'month').toDate()
+        };
     }
     generateUid() {
         this.uid = `org_${(0, uuid_1.v4)()}`;
@@ -45,10 +53,9 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({
         name: 'plan',
-        type: 'string',
-        default: 'free'
+        type: 'jsonb',
     }),
-    __metadata("design:type", String)
+    __metadata("design:type", Object)
 ], Organizations.prototype, "plan", void 0);
 __decorate([
     (0, typeorm_1.Column)({
